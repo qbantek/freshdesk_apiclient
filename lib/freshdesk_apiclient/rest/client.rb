@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-require 'base64'
-
 module FreshdeskApiclient
   module REST
     class Client
@@ -36,12 +34,6 @@ module FreshdeskApiclient
 
       def respond_to_missing?(method_sym, include_private=false)
         RESOURCES.include?(method_sym) ? true : super
-      end
-
-      private
-
-      def auth_header(username, password)
-        "Basic #{Base64.encode64("#{username}:#{password}")}"
       end
     end
   end
