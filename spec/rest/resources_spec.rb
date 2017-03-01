@@ -7,19 +7,19 @@ RSpec.describe FreshdeskApiclient::REST::Resources do
   RSpec.shared_examples 'a resource' do
     let(:get_headers) { {Authorization: "Basic dTpw\n", Accept: 'application/json'} }
     let(:post_headers) { get_headers.merge('Content-Type': 'application/json') }
-    let(:path) { subject.class.name.split('::').last.downcase }
+    let(:resource) { subject.class.name.split('::').last.downcase }
 
     describe '#new' do
       context 'when path option is provided' do
         subject { FreshdeskApiclient::REST::Resources.new(:url, credentials: {username: :u, password: :p}, path: :foo) }
         it 'sets the url using given path' do
-          expect(subject.instance_variable_get(:@url)).to eql("#{:url}/#{:foo}")
+          expect(subject.instance_variable_get(:@options)[:url]).to eql("#{:url}/#{:foo}")
         end
       end
 
       context 'when path option is not provided' do
         it 'sets the url for the given resource' do
-          expect(subject.instance_variable_get(:@url)).to eql("#{:url}/#{path}")
+          expect(subject.instance_variable_get(:@options)[:url]).to eql("#{:url}/#{resource}")
         end
       end
 
@@ -52,7 +52,7 @@ RSpec.describe FreshdeskApiclient::REST::Resources do
       it('executes the request as a GET') do
         request = object_double('RestClient::Request', execute: nil).as_stubbed_const
         subject.list
-        expect(request).to have_received(:execute).with(method: :get, url: "#{:url}/#{path}", headers: get_headers)
+        expect(request).to have_received(:execute).with(method: :get, url: "#{:url}/#{resource}", headers: get_headers)
       end
     end
 
@@ -61,7 +61,7 @@ RSpec.describe FreshdeskApiclient::REST::Resources do
         request = object_double('RestClient::Request', execute: nil).as_stubbed_const
         subject.create :payload
         expect(request).to have_received(:execute).with(method: :post,
-                                                        url: "#{:url}/#{path}",
+                                                        url: "#{:url}/#{resource}",
                                                         headers: post_headers,
                                                         payload: :payload)
       end

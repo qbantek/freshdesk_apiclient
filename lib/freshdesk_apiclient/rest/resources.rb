@@ -7,22 +7,17 @@ module FreshdeskApiclient
   module REST
     class Resources
       def initialize(base_url, options={})
-        @url = "#{base_url}/#{options[:path] || end_point}"
+        @options = {url: "#{base_url}/#{options[:path] || end_point}"}
         @headers = headers options[:credentials]
         RestClient.log = options[:logger]
       end
 
       def list
-        RestClient::Request.execute(method: :get,
-                                    url: @url,
-                                    headers: @headers.dup.reject! {|key| [:'Content-Type'].include?(key) })
+        execute(method: :get, headers: @headers.dup.reject! {|key| [:'Content-Type'].include?(key) })
       end
 
       def create(json_payload)
-        RestClient::Request.execute(method: :post,
-                                    url: @url,
-                                    headers: @headers,
-                                    payload: json_payload)
+        execute(method: :post, headers: @headers, payload: json_payload)
       end
 
       protected
@@ -32,6 +27,10 @@ module FreshdeskApiclient
       end
 
       private
+
+      def execute(options)
+        RestClient::Request.execute @options.merge(options)
+      end
 
       def headers(credentials)
         {
