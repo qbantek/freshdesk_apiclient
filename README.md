@@ -4,8 +4,11 @@
 [![Gem Version](https://badge.fury.io/rb/freshdesk_apiclient.svg)](https://badge.fury.io/rb/freshdesk_apiclient)
 [![Build Status](https://travis-ci.org/qbantek/freshdesk_apiclient.svg?branch=master)](https://travis-ci.org/qbantek/freshdesk_apiclient)
 [![Code Climate](https://codeclimate.com/github/qbantek/freshdesk_apiclient/badges/gpa.svg)](https://codeclimate.com/github/qbantek/freshdesk_apiclient)
+[![Test Coverage](https://codeclimate.com/github/qbantek/freshdesk_apiclient/badges/coverage.svg)](https://codeclimate.com/github/qbantek/freshdesk_apiclient/coverage)
+[![Dependency Status](https://gemnasium.com/badges/github.com/qbantek/freshdesk_apiclient.svg)](https://gemnasium.com/github.com/qbantek/freshdesk_apiclient)
+[![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://freshdesk_apiclient.mit-license.org)
 
-A ruby API client for freshdesk.com.
+A ruby client for [freshdesk.com](https://developer.freshdesk.com/api/) API.
 
 ## Installation
 
