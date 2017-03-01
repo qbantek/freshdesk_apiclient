@@ -6,7 +6,6 @@ if ENV['CODECLIMATE_REPO_TOKEN']
   SimpleCov.start
 end
 
-
 require 'bundler/setup'
 Bundler.setup
 
@@ -16,7 +15,7 @@ RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = '.rspec_status'
 
-  config.expect_with(:rspec) { |c| c.syntax = :expect }
+  config.expect_with(:rspec) {|c| c.syntax = :expect }
   config.mock_with(:rspec) {|mocks| mocks.verify_partial_doubles = true }
   # config.filter_run_including :focus => true
   config.default_formatter = 'doc' if config.files_to_run.one?
