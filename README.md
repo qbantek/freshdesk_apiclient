@@ -1,4 +1,9 @@
 # FreshdeskApiclient
+====
+
+[![Gem Version](https://badge.fury.io/rb/freshdesk_apiclient.svg)](https://badge.fury.io/rb/freshdesk_apiclient)
+[![Build Status](https://travis-ci.org/qbantek/freshdesk_apiclient.svg?branch=master)](https://travis-ci.org/qbantek/freshdesk_apiclient)
+[![Code Climate](https://codeclimate.com/github/qbantek/freshdesk_apiclient/badges/gpa.svg)](https://codeclimate.com/github/qbantek/freshdesk_apiclient)
 
 A ruby API client for freshdesk.com.
 
