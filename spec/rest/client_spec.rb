@@ -30,17 +30,12 @@ describe FreshdeskApiclient::REST::Client do
       end
     end
 
-    it 'sets the credentials for the given parameters' do
-      expect(subject.instance_variable_get(:@credentials)[:username]).to eq(:api_key)
-      expect(subject.instance_variable_get(:@credentials)[:password]).to eq('X')
-    end
-
     context 'when a logger option is not provided' do
       it('does not sets the logger') { expect(subject.instance_variable_get(:@logger)).to be_nil }
     end
 
     context 'when a logger option is provided' do
-      subject { FreshdeskApiclient::REST::Client.new(:domain, :api_key, nil, logger: Logger.new(STDOUT)) }
+      subject { FreshdeskApiclient::REST::Client.new(:domain, :api_key, nil, Logger.new(STDOUT)) }
       it('sets the logger') { expect(subject.instance_variable_get(:@logger)).to be_a(Logger) }
     end
   end
