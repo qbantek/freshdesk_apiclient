@@ -10,11 +10,11 @@ module FreshdeskApiclient
       # @param [String] domain
       # @param [String] username_or_api_key
       # @param [String] password
-      # @param [Hash] options
-      def initialize(domain, username_or_api_key, password='X', options={})
+      # @param [Logger] logger
+      def initialize(domain, username_or_api_key, password='X', logger=nil)
         @base_url = "https://#{domain}.freshdesk.com/api/v2/"
         @credentials = {username: username_or_api_key, password: password}
-        @logger = options.key?(:logger) && options[:logger].respond_to?(:info) ? options[:logger] : nil
+        @logger = logger
       end
 
       # obj.method_missing(symbol [, *args] )   -> result
