@@ -11,7 +11,10 @@ module FreshdeskApiclient
       # @param [String] username_or_api_key
       # @param [String] password
       # @param [Logger] logger
-      def initialize(domain, username_or_api_key, password='X', logger=nil)
+      def initialize(domain: FreshdeskApiclient.domain,
+                     username_or_api_key: FreshdeskApiclient.username_or_api_key,
+                     password: FreshdeskApiclient.password,
+                     logger: nil)
         @base_url = "https://#{domain}.freshdesk.com/api/v2/"
         @credentials = {username: username_or_api_key, password: password}
         @logger = logger
