@@ -9,14 +9,19 @@ require_relative '../../lib/freshdesk_apiclient/rest/tickets' unless defined?(Fr
 require_relative '../../lib/freshdesk_apiclient/rest/resources' unless defined?(FreshdeskApiclient::REST::Resources)
 
 describe FreshdeskApiclient::REST::Client do
-  subject { FreshdeskApiclient::REST::Client.new(:domain, :api_key) }
+  before do
+    FreshdeskApiclient.domain = :domain
+    FreshdeskApiclient.username_or_api_key = :api_key
+  end
+  subject { FreshdeskApiclient::REST::Client.new }
   describe '#new' do
     it 'sets the base_url for the given domain' do
       expect(subject.instance_variable_get(:@base_url)).to eql("https://#{:domain}.freshdesk.com/api/v2/")
     end
 
     context 'when password is provided' do
-      subject { FreshdeskApiclient::REST::Client.new(:domain, :api_key, :password) }
+      before { FreshdeskApiclient.password = :password }
+      subject { FreshdeskApiclient::REST::Client.new }
       it 'sets the credentials for the given parameters' do
         expect(subject.instance_variable_get(:@credentials)[:username]).to eq(:api_key)
         expect(subject.instance_variable_get(:@credentials)[:password]).to eq(:password)
@@ -24,6 +29,7 @@ describe FreshdeskApiclient::REST::Client do
     end
 
     context 'when password is not provided' do
+      before { FreshdeskApiclient.password = nil }
       it 'sets the credentials for the given api_key and default password' do
         expect(subject.instance_variable_get(:@credentials)[:username]).to eq(:api_key)
         expect(subject.instance_variable_get(:@credentials)[:password]).to eq('X')
@@ -35,7 +41,7 @@ describe FreshdeskApiclient::REST::Client do
     end
 
     context 'when a logger option is provided' do
-      subject { FreshdeskApiclient::REST::Client.new(:domain, :api_key, nil, Logger.new(STDOUT)) }
+      subject { FreshdeskApiclient::REST::Client.new(logger: Logger.new(STDOUT)) }
       it('sets the logger') { expect(subject.instance_variable_get(:@logger)).to be_a(Logger) }
     end
   end
