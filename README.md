@@ -28,7 +28,7 @@ Or install it yourself as:
     
 #### Setup your authentication credentials    
     
-You'll need to create your account and get its secret and key at [freshdesk](https://freshdesk.com/). 
+You'll need to create your account and get the credentials at [freshdesk](https://freshdesk.com/). 
 See [Authentication](https://developers.freshdesk.com/api/#authentication) for more information.
 
 Username and password:
