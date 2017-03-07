@@ -12,6 +12,8 @@ engines:
     config:
       languages:
       - ruby
+  flog:
+    enabled: true
 ratings:
   paths:
   - lib/**
@@ -19,3 +21,4 @@ ratings:
 exclude_paths:
 - spec/**/*
 - "**/vendor/**/*"
+engines:

@@ -16,9 +16,3 @@ addons:
     repo_token: c10c2e0f19f128e1104891ce01b180b0f226ee1c58ba42a1bda3cfa0c7a2784d
 after_success:
   - bundle exec codeclimate-test-reporter
-engines:
-  flog:
-    enabled: true
-ratings:
-  paths:
-    - "**.rb"
