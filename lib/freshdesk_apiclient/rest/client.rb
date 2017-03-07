@@ -24,12 +24,11 @@ module FreshdeskApiclient
       def method_missing(symbol, *arguments, &block)
         if RESOURCES.include? symbol
           class_name = camelize(symbol.to_s)
-          variable = "@#{class_name.downcase}"
-          unless instance_variable_defined? variable
-            klass = Object.const_get('FreshdeskApiclient').const_get('REST').const_get class_name
-            instance_variable_set(variable, klass.new(@base_url, credentials: @credentials, logger: logger))
+          variable_name = "@#{class_name.downcase}"
+          unless instance_variable_defined? variable_name
+            instance_variable_set(variable_name, initialize_class(class_name))
           end
-          instance_variable_get(variable)
+          instance_variable_get(variable_name)
         else
           super
         end
@@ -37,6 +36,16 @@ module FreshdeskApiclient
 
       def respond_to_missing?(method_sym, include_private=false)
         RESOURCES.include?(method_sym) ? true : super
+      end
+
+      private
+
+      def initialize_class(class_name)
+        constant(class_name).new(@base_url, credentials: @credentials, logger: logger)
+      end
+
+      def constant(class_name)
+        Object.const_get('FreshdeskApiclient').const_get('REST').const_get class_name
       end
     end
   end
