@@ -25,28 +25,36 @@ module FreshdeskApiclient
         RESOURCES.include?(symbol) ? instance_variable(symbol) : super
       end
 
-      def respond_to_missing?(method_sym, include_private=false)
-        RESOURCES.include?(method_sym) ? true : super
+      def respond_to_missing?(method, *)
+        RESOURCES.include?(method) ? true : super
       end
 
       private
 
       def instance_variable(symbol)
         class_name = camelize symbol
-        variable_name = "@#{class_name.downcase}"
-        if instance_variable_defined? variable_name
-          instance_variable_get(variable_name)
-        else
-          instance_variable_set(variable_name, init_class(class_name))
-        end
+        ivar = as_ivar class_name
+
+        instance_variable_defined?(ivar) ? instance_variable_get(ivar) : set(ivar, class_name)
       end
 
-      def init_class(class_name)
-        constant(class_name).new(@base_url, credentials: @credentials, logger: logger)
+      def set(ivar, class_name)
+        obj = instantiate class_name
+        instance_variable_set ivar, obj
       end
 
-      def constant(class_name)
-        Object.const_get('FreshdeskApiclient').const_get('REST').const_get class_name
+      def as_ivar(name)
+        "@#{name.downcase}"
+      end
+
+      def instantiate(class_name)
+        klass(class_name, 'FreshdeskApiclient', 'REST').new(@base_url, credentials: @credentials, logger: logger)
+      end
+
+      def klass(class_name, *module_names)
+        c = Object
+        module_names.each {|m| c = c.const_get m }
+        c.const_get class_name
       end
     end
   end

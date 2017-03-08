@@ -32,4 +32,12 @@ module FreshdeskApiclient
   def self.password=(password)
     @password = password
   end
+
+  def self.logger
+    @logger ||= nil
+  end
+
+  def self.logger=(logger)
+    @logger = logger
+  end
 end
