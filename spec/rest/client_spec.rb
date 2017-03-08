@@ -37,6 +37,7 @@ describe FreshdeskApiclient::REST::Client do
     end
 
     context 'when a logger option is not provided' do
+      before { FreshdeskApiclient.logger = nil }
       it('does not sets the logger') { expect(subject.instance_variable_get(:@logger)).to be_nil }
     end
 
