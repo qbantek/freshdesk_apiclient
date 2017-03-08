@@ -14,6 +14,9 @@ engines:
       - ruby
   flog:
     enabled: true
+    config:
+      all: false
+      threshold: 15
 ratings:
   paths:
   - lib/**
