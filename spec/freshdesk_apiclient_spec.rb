@@ -17,4 +17,7 @@ RSpec.describe FreshdeskApiclient do
     before { FreshdeskApiclient.password = nil }
     it('has a default password') { expect(FreshdeskApiclient.password).to eq('X') }
   end
+
+  before { FreshdeskApiclient.logger = :l }
+  it('allows to set logger') { expect(FreshdeskApiclient.logger).to eq(:l) }
 end
