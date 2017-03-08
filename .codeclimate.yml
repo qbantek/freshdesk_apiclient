@@ -12,6 +12,8 @@ engines:
     config:
       languages:
       - ruby
+  flog:
+    enabled: true
 ratings:
   paths:
   - lib/**
