@@ -16,7 +16,8 @@ engines:
     enabled: true
     config:
       all: false
-      threshold: 15
+      continue: true
+      methods: true
 ratings:
   paths:
   - lib/**

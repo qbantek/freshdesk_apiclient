@@ -37,6 +37,10 @@ module FreshdeskApiclient
         class_name = camelize symbol
         ivar = as_ivar class_name
 
+        get_set_ivar class_name, ivar
+      end
+
+      def get_set_ivar(class_name, ivar)
         instance_variable_defined?(ivar) ? instance_variable_get(ivar) : set(ivar, class_name)
       end
 
