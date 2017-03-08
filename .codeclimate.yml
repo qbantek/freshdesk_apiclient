@@ -14,6 +14,10 @@ engines:
       - ruby
   flog:
     enabled: true
+    config:
+      all: false
+      continue: true
+      methods: true
 ratings:
   paths:
   - lib/**
