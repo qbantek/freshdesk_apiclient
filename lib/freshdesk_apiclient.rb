@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'core_extensions/object/class_name'
 require 'freshdesk_apiclient/version'
 
 require 'freshdesk_apiclient/utils/loggeable'
