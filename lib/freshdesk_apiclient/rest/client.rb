@@ -35,9 +35,7 @@ module FreshdeskApiclient
 
       def instance_variable(symbol)
         class_name = camelize symbol
-        ivar = as_ivar class_name
-
-        get_set_ivar class_name, ivar
+        get_set_ivar class_name, as_ivar(class_name)
       end
 
       def get_set_ivar(class_name, ivar)
