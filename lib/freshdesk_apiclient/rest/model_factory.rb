@@ -16,12 +16,8 @@ module FreshdeskApiclient
 
       def ancestor
         c = Object
-        modules.each {|m| c = c.const_get m }
+        namespace_as_array.each {|m| c = c.const_get m }
         c
-      end
-
-      def modules
-        full_class_name_as_array[0...-1]
       end
     end
   end
