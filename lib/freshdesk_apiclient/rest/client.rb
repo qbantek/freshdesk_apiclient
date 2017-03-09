@@ -34,21 +34,17 @@ module FreshdeskApiclient
       private
 
       def instance_variable(symbol)
-        class_name = FreshdeskApiclient::Utils::Camelizable.camelize symbol
-        get_set_ivar class_name, as_ivar(class_name)
+        get_set_ivar FreshdeskApiclient::Utils::Camelizable.camelize(symbol)
       end
 
-      def get_set_ivar(class_name, ivar)
+      def get_set_ivar(class_name)
+        ivar = "@#{class_name.downcase}"
         instance_variable_defined?(ivar) ? instance_variable_get(ivar) : set(ivar, class_name)
       end
 
       def set(ivar, class_name)
         obj = ModelFactory.new.instantiate class_name, @base_url, credentials: @credentials, logger: logger
         instance_variable_set ivar, obj
-      end
-
-      def as_ivar(name)
-        "@#{name.downcase}"
       end
     end
   end
