@@ -39,10 +39,10 @@ module FreshdeskApiclient
 
       def get_set_ivar(class_name)
         ivar = "@#{class_name.downcase}"
-        instance_variable_defined?(ivar) ? instance_variable_get(ivar) : set(ivar, class_name)
+        instance_variable_defined?(ivar) ? instance_variable_get(ivar) : set_ivar(ivar, class_name)
       end
 
-      def set(ivar, class_name)
+      def set_ivar(ivar, class_name)
         obj = ModelFactory.new.instantiate class_name, @base_url, credentials: @credentials, logger: logger
         instance_variable_set ivar, obj
       end
