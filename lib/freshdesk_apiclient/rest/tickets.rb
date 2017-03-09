@@ -3,6 +3,7 @@ require_relative '../../../lib/freshdesk_apiclient/rest/resources' unless define
 
 module FreshdeskApiclient
   module REST
-    class Tickets < FreshdeskApiclient::REST::Resources; end
+    class Tickets < FreshdeskApiclient::REST::Resources
+    end
   end
 end
