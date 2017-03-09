@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 require_relative '../../../lib/freshdesk_apiclient'
+require_relative '../../../lib/freshdesk_apiclient/rest/model_factory'
+require_relative '../../../lib/freshdesk_apiclient/utils/camelizable'
 
 module FreshdeskApiclient
   module REST
     class Client
       include FreshdeskApiclient::Utils::Loggeable
-      include FreshdeskApiclient::Utils::Camelizable
 
       RESOURCES = %i(tickets).freeze
 
@@ -17,7 +18,7 @@ module FreshdeskApiclient
                      username_or_api_key: FreshdeskApiclient.username_or_api_key,
                      password: FreshdeskApiclient.password, logger: FreshdeskApiclient.logger)
         @base_url = "https://#{domain}.freshdesk.com/api/v2/"
-        @credentials = {username: username_or_api_key, password: password}
+        @credentials = {user: username_or_api_key, password: password}
         @logger = logger
       end
 
@@ -33,7 +34,7 @@ module FreshdeskApiclient
       private
 
       def instance_variable(symbol)
-        class_name = camelize symbol
+        class_name = FreshdeskApiclient::Utils::Camelizable.camelize symbol
         get_set_ivar class_name, as_ivar(class_name)
       end
 
@@ -42,22 +43,12 @@ module FreshdeskApiclient
       end
 
       def set(ivar, class_name)
-        obj = instantiate class_name
+        obj = ModelFactory.new.instantiate class_name, @base_url, credentials: @credentials, logger: logger
         instance_variable_set ivar, obj
       end
 
       def as_ivar(name)
         "@#{name.downcase}"
-      end
-
-      def instantiate(class_name)
-        klass(class_name, 'FreshdeskApiclient', 'REST').new(@base_url, credentials: @credentials, logger: logger)
-      end
-
-      def klass(class_name, *module_names)
-        c = Object
-        module_names.each {|m| c = c.const_get m }
-        c.const_get class_name
       end
     end
   end
