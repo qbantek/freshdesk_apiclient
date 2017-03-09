@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 require 'core_extensions/object/class_name'
+require 'core_extensions/string/camelize'
+
 require 'freshdesk_apiclient/version'
-
 require 'freshdesk_apiclient/utils/loggeable'
-require 'freshdesk_apiclient/utils/camelizable'
-
 require 'freshdesk_apiclient/rest/model_factory'
 require 'freshdesk_apiclient/rest/resources'
 require 'freshdesk_apiclient/rest/tickets'

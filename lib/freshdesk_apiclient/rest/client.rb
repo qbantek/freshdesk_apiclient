@@ -1,12 +1,13 @@
 # frozen_string_literal: true
+require_relative '../../../lib/core_extensions/string/camelize'
 require_relative '../../../lib/freshdesk_apiclient'
-require_relative '../../../lib/freshdesk_apiclient/rest/model_factory'
-require_relative '../../../lib/freshdesk_apiclient/utils/camelizable'
+require_relative 'model_factory'
 
 module FreshdeskApiclient
   module REST
     class Client
       include FreshdeskApiclient::Utils::Loggeable
+      using StringExtensions
 
       RESOURCES = %i(tickets).freeze
 
@@ -34,21 +35,17 @@ module FreshdeskApiclient
       private
 
       def instance_variable(symbol)
-        class_name = FreshdeskApiclient::Utils::Camelizable.camelize symbol
-        get_set_ivar class_name, as_ivar(class_name)
+        get_set_ivar(symbol.to_s.camelize)
       end
 
-      def get_set_ivar(class_name, ivar)
-        instance_variable_defined?(ivar) ? instance_variable_get(ivar) : set(ivar, class_name)
+      def get_set_ivar(class_name)
+        ivar = "@#{class_name.downcase}"
+        instance_variable_defined?(ivar) ? instance_variable_get(ivar) : set_ivar(ivar, class_name)
       end
 
-      def set(ivar, class_name)
+      def set_ivar(ivar, class_name)
         obj = ModelFactory.new.instantiate class_name, @base_url, credentials: @credentials, logger: logger
         instance_variable_set ivar, obj
-      end
-
-      def as_ivar(name)
-        "@#{name.downcase}"
       end
     end
   end
