@@ -34,7 +34,7 @@ See [Authentication](https://developers.freshdesk.com/api/#authentication) for m
 Username and password:
 
 ```ruby
-# config/intializers/freshdesk_apiclient.rb
+# config/initializers/freshdesk_apiclient.rb
 FreshdeskApiclient.username_or_api_key = ENV["FRESHDESK_USERNAME"]
 FreshdeskApiclient.password = ENV["FRESHDESK_PASWWORD"]
 ```
@@ -42,10 +42,19 @@ FreshdeskApiclient.password = ENV["FRESHDESK_PASWWORD"]
 Or API key:
 
 ```ruby
-# config/intializers/freshdesk_apiclient.rb
+# config/initializers/freshdesk_apiclient.rb
 FreshdeskApiclient.username_or_api_key = ENV["FRESHDESK_API_KEY"]
 ```
-(If you use the API key, there is no need for a password.)    
+(If you use the API key, there is no need for a password.)  
+  
+#### Other configuration
+  
+You might want to set the Logger to be used by the gem.
+  
+```ruby
+# config/initializers/freshdesk_apiclient.rb
+FreshdeskApiclient.logger = Rails.logger
+```
 
 ## Usage
 
