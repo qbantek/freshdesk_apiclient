@@ -1,12 +1,13 @@
 # frozen_string_literal: true
+require_relative '../../../lib/core_extensions/string/camelize'
 require_relative '../../../lib/freshdesk_apiclient'
-require_relative '../../../lib/freshdesk_apiclient/rest/model_factory'
-require_relative '../../../lib/freshdesk_apiclient/utils/camelizable'
+require_relative 'model_factory'
 
 module FreshdeskApiclient
   module REST
     class Client
       include FreshdeskApiclient::Utils::Loggeable
+      using StringExtensions
 
       RESOURCES = %i(tickets).freeze
 
@@ -34,7 +35,7 @@ module FreshdeskApiclient
       private
 
       def instance_variable(symbol)
-        get_set_ivar FreshdeskApiclient::Utils::Camelizable.camelize(symbol)
+        get_set_ivar(symbol.to_s.camelize)
       end
 
       def get_set_ivar(class_name)

@@ -16,5 +16,5 @@ module ObjectExtensions
     def full_class_name
       self.class.name
     end
-  end
+  end unless Object.new.respond_to?(:class_name)
 end

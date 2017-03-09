@@ -1,19 +1,18 @@
 # frozen_string_literal: true
 require 'logger' unless defined?(Logger)
-unless defined?(FreshdeskApiclient::Utils::Camelizable)
-  require_relative '../../lib/freshdesk_apiclient/utils/camelizable'
-end
 require_relative '../../lib/freshdesk_apiclient/utils/loggeable' unless defined?(FreshdeskApiclient::Utils::Loggeable)
 require_relative '../../lib/freshdesk_apiclient/rest/client' unless defined?(FreshdeskApiclient::REST::Client)
 require_relative '../../lib/freshdesk_apiclient/rest/tickets' unless defined?(FreshdeskApiclient::REST::Tickets)
 require_relative '../../lib/freshdesk_apiclient/rest/resources' unless defined?(FreshdeskApiclient::REST::Resources)
 
 describe FreshdeskApiclient::REST::Client do
+  using StringExtensions
+
   before do
     FreshdeskApiclient.domain = :domain
     FreshdeskApiclient.username_or_api_key = :api_key
   end
-  subject { FreshdeskApiclient::REST::Client.new }
+
   describe '#new' do
     it 'sets the base_url for the given domain' do
       expect(subject.instance_variable_get(:@base_url)).to eql("https://#{:domain}.freshdesk.com/api/v2/")
@@ -21,7 +20,6 @@ describe FreshdeskApiclient::REST::Client do
 
     context 'when password is provided' do
       before { FreshdeskApiclient.password = :password }
-      subject { FreshdeskApiclient::REST::Client.new }
       it 'sets the credentials for the given parameters' do
         expect(subject.instance_variable_get(:@credentials)[:user]).to eq(:api_key)
         expect(subject.instance_variable_get(:@credentials)[:password]).to eq(:password)
@@ -52,7 +50,7 @@ describe FreshdeskApiclient::REST::Client do
 
     describe "##{method}" do
       it do
-        class_name = FreshdeskApiclient::Utils::Camelizable.camelize method.to_s
+        class_name = method.to_s.camelize
         klass = Object.const_get('FreshdeskApiclient').const_get('REST').const_get class_name
         expect(subject.send(method)).to be_an_instance_of(klass)
       end
