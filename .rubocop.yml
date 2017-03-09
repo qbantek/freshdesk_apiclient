@@ -143,7 +143,7 @@ Style/StringLiteralsInInterpolation:
 Metrics/AbcSize:
   Description: A calculated magnitude based on number of assignments, branches, and
     conditions.
-  Enabled: false
+  Enabled: true
   Max: 15
 Metrics/BlockLength:
   ExcludedMethods: ['describe', 'context', 'shared_examples']

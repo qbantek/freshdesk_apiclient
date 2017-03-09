@@ -13,11 +13,7 @@ engines:
       languages:
       - ruby
   flog:
-    enabled: true
-    config:
-      all: false
-      continue: true
-      methods: true
+    enabled: false
 ratings:
   paths:
   - lib/**

@@ -15,8 +15,7 @@ module FreshdeskApiclient
       # @param [Logger] logger
       def initialize(domain: FreshdeskApiclient.domain,
                      username_or_api_key: FreshdeskApiclient.username_or_api_key,
-                     password: FreshdeskApiclient.password,
-                     logger: FreshdeskApiclient.logger)
+                     password: FreshdeskApiclient.password, logger: FreshdeskApiclient.logger)
         @base_url = "https://#{domain}.freshdesk.com/api/v2/"
         @credentials = {username: username_or_api_key, password: password}
         @logger = logger
@@ -35,9 +34,7 @@ module FreshdeskApiclient
 
       def instance_variable(symbol)
         class_name = camelize symbol
-        ivar = as_ivar class_name
-
-        get_set_ivar class_name, ivar
+        get_set_ivar class_name, as_ivar(class_name)
       end
 
       def get_set_ivar(class_name, ivar)
