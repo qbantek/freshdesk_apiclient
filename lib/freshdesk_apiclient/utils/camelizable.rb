@@ -2,12 +2,12 @@
 module FreshdeskApiclient
   module Utils
     module Camelizable
-      def camelize(term)
+      def self.camelize(term)
         string = term.to_s
         format string
       end
 
-      def format(string)
+      def self.format(string)
         string = string.sub(/^[a-z\d]*/) { $&.capitalize }
         string.gsub!(%r{(?:_|(/))([a-z\d]*)}) { $2.capitalize }
         string

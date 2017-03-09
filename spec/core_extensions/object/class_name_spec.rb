@@ -27,6 +27,14 @@ RSpec.describe ObjectExtensions do
       describe '#class_name' do
         it { expect(subject.class_name).to eq('Bar') }
       end
+
+      describe '#namespace_as_array' do
+        it('should return an Array of 1 item') do
+          expect(subject.namespace_as_array).to be_a(Array)
+          expect(subject.namespace_as_array.size).to eq(1)
+        end
+        it('first array item should eq Foo') { expect(subject.namespace_as_array[0]).to eq('Foo') }
+      end
     end
   end
 end

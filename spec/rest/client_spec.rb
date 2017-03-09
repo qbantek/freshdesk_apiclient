@@ -23,7 +23,7 @@ describe FreshdeskApiclient::REST::Client do
       before { FreshdeskApiclient.password = :password }
       subject { FreshdeskApiclient::REST::Client.new }
       it 'sets the credentials for the given parameters' do
-        expect(subject.instance_variable_get(:@credentials)[:username]).to eq(:api_key)
+        expect(subject.instance_variable_get(:@credentials)[:user]).to eq(:api_key)
         expect(subject.instance_variable_get(:@credentials)[:password]).to eq(:password)
       end
     end
@@ -31,7 +31,7 @@ describe FreshdeskApiclient::REST::Client do
     context 'when password is not provided' do
       before { FreshdeskApiclient.password = nil }
       it 'sets the credentials for the given api_key and default password' do
-        expect(subject.instance_variable_get(:@credentials)[:username]).to eq(:api_key)
+        expect(subject.instance_variable_get(:@credentials)[:user]).to eq(:api_key)
         expect(subject.instance_variable_get(:@credentials)[:password]).to eq('X')
       end
     end
@@ -52,7 +52,8 @@ describe FreshdeskApiclient::REST::Client do
 
     describe "##{method}" do
       it do
-        klass = Object.const_get('FreshdeskApiclient').const_get('REST').const_get subject.camelize(method.to_s)
+        class_name = FreshdeskApiclient::Utils::Camelizable.camelize method.to_s
+        klass = Object.const_get('FreshdeskApiclient').const_get('REST').const_get class_name
         expect(subject.send(method)).to be_an_instance_of(klass)
       end
     end

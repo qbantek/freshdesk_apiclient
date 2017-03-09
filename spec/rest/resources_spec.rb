@@ -2,7 +2,7 @@
 require_relative '../../lib/freshdesk_apiclient/rest/resources' unless defined?(FreshdeskApiclient::REST::Resources)
 
 RSpec.describe FreshdeskApiclient::REST::Resources do
-  subject { FreshdeskApiclient::REST::Resources.new(:url, credentials: {username: :u, password: :p}) }
+  subject { FreshdeskApiclient::REST::Resources.new(:url, credentials: {user: :u, password: :p}) }
 
   RSpec.shared_examples 'a resource' do
     let(:get_headers) { {Accept: 'application/json'} }
@@ -11,30 +11,17 @@ RSpec.describe FreshdeskApiclient::REST::Resources do
 
     describe '#new' do
       it 'sets the user using given credentials' do
-        expect(subject.instance_variable_get(:@args)[:user]).to eql(:u)
+        expect(subject.instance_variable_get(:@credentials)[:user]).to eql(:u)
       end
 
       it 'sets the password using given credentials' do
-        expect(subject.instance_variable_get(:@args)[:password]).to eql(:p)
-      end
-
-      context 'when path option is provided' do
-        subject { FreshdeskApiclient::REST::Resources.new(:url, credentials: {username: :u, password: :p}, path: :foo) }
-        it 'sets the url using given path' do
-          expect(subject.instance_variable_get(:@args)[:url]).to eql("#{:url}/#{:foo}")
-        end
-      end
-
-      context 'when path option is not provided' do
-        it 'sets the url for the given resource' do
-          expect(subject.instance_variable_get(:@args)[:url]).to eql("#{:url}/#{resource}")
-        end
+        expect(subject.instance_variable_get(:@credentials)[:password]).to eql(:p)
       end
 
       it('sets the logger on RestClient') do
         rest_client = object_double('RestClient', :log= => nil).as_stubbed_const
         logger = Logger.new(STDOUT)
-        FreshdeskApiclient::REST::Resources.new(:url, credentials: {username: :u, password: :p}, logger: logger)
+        FreshdeskApiclient::REST::Resources.new(:url, credentials: {user: :u, password: :p}, logger: logger)
         expect(rest_client).to have_received(:log=).with(logger)
       end
     end
@@ -51,6 +38,22 @@ RSpec.describe FreshdeskApiclient::REST::Resources do
         subject.list
         expect(get_headers[:Accept]).to eq('application/json')
         expect(request).to have_received(:execute).with(hash_including(headers: get_headers))
+      end
+
+      context 'when path option is provided' do
+        it 'sets the url using given path' do
+          request = object_double('RestClient::Request', execute: nil).as_stubbed_const
+          subject.list :path
+          expect(request).to have_received(:execute).with(hash_including(url: "url/#{:path}"))
+        end
+      end
+
+      context 'when path option is not provided' do
+        it 'sets the url for the given resource' do
+          request = object_double('RestClient::Request', execute: nil).as_stubbed_const
+          subject.list
+          expect(request).to have_received(:execute).with(hash_including(url: "url/#{resource}"))
+        end
       end
     end
 

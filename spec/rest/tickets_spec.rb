@@ -4,7 +4,7 @@ require_relative '../../lib/freshdesk_apiclient/rest/resources' unless defined?(
 require_relative '../../lib/freshdesk_apiclient/rest/tickets' unless defined?(FreshdeskApiclient::REST::Tickets)
 
 describe FreshdeskApiclient::REST::Tickets do
-  subject { FreshdeskApiclient::REST::Tickets.new(:url, credentials: {username: :u, password: :p}) }
+  subject { FreshdeskApiclient::REST::Tickets.new(:url, credentials: {user: :u, password: :p}) }
 
   it_behaves_like 'a resource'
 end
