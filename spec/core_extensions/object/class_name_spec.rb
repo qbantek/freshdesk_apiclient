@@ -21,7 +21,7 @@ RSpec.describe ObjectExtensions do
           expect(subject.full_class_name_as_array.size).to eq(2)
         end
         it('first array item should eq Foo') { expect(subject.full_class_name_as_array[0]).to eq('Foo') }
-        it('second array item should eq Bar') { expect(subject.full_class_name_as_array[0]).to eq('Foo') }
+        it('second array item should eq Bar') { expect(subject.full_class_name_as_array[1]).to eq('Bar') }
       end
 
       describe '#class_name' do
