@@ -4,7 +4,10 @@ RSpec.describe StringExtensions do
   using StringExtensions
 
   describe '#camelize' do
-    it { expect('Foo_bar'.camelize).to eq('FooBar') }
+    context 'given Foo_bar' do
+      it { expect('Foo_bar'.camelize).to eq('FooBar') }
+    end
+
     it { expect('Foo::Bar'.camelize).to eq('FooBar') }
     it { expect('fooBar'.camelize).to eq('Foobar') }
   end
