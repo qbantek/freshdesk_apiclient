@@ -8,7 +8,12 @@ RSpec.describe StringExtensions do
       it { expect('Foo_bar'.camelize).to eq('FooBar') }
     end
 
-    it { expect('Foo::Bar'.camelize).to eq('FooBar') }
-    it { expect('fooBar'.camelize).to eq('Foobar') }
+    context 'given Foo::Bar' do
+      it { expect('Foo::Bar'.camelize).to eq('FooBar') }
+    end
+
+    context 'given fooBar' do
+      it { expect('fooBar'.camelize).to eq('Foobar') }
+    end
   end
 end
